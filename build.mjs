@@ -1,5 +1,5 @@
 import { build } from 'esbuild';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const result = await build({
   entryPoints: ['src/ui/main.ts'],
@@ -12,6 +12,6 @@ const result = await build({
 });
 const js = result.outputFiles[0].text.replace(/<\/script/gi, '<\\/script');
 const html = readFileSync('src/ui/template.html', 'utf8').replace('/*BUNDLE*/', () => js);
-mkdirSync('dist', { recursive: true });
-writeFileSync('dist/instant-chess.html', html);
-console.log(`dist/instant-chess.html  ${(html.length / 1024).toFixed(0)} KB`);
+
+writeFileSync('index.html', html);
+console.log(`index.html  ${(html.length / 1024).toFixed(0)} KB`);
